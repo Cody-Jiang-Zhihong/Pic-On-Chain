@@ -79,61 +79,80 @@ export default function UploadForm({ disabled, onRegister }) {
   }
 
   return (
-    <form className="stacked-form" onSubmit={handleSubmit}>
-      <label className="input-group">
-        <span>Image file</span>
-        <input
-          accept="image/*"
-          onChange={(event) => setFile(event.target.files?.[0] ?? null)}
-          type="file"
-        />
-      </label>
+    <form className="stacked-form upload-form" onSubmit={handleSubmit}>
+      <div className="upload-grid">
+        <label className="input-group field-span-2">
+          <span>Image file</span>
+          <input
+            accept="image/*"
+            onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+            type="file"
+          />
+        </label>
 
-      <label className="input-group">
-        <span>Model name</span>
-        <input
-          name="modelName"
-          onChange={handleChange}
-          placeholder="e.g. DALL-E 3"
-          required
-          type="text"
-          value={formValues.modelName}
-        />
-      </label>
+        <label className="input-group">
+          <span>Model name</span>
+          <input
+            name="modelName"
+            onChange={handleChange}
+            placeholder="e.g. DALL-E 3"
+            required
+            type="text"
+            value={formValues.modelName}
+          />
+        </label>
 
-      <label className="input-group">
-        <span>Prompt</span>
-        <textarea
-          name="prompt"
-          onChange={handleChange}
-          placeholder="Describe the prompt used to generate the image"
-          required
-          rows="4"
-          value={formValues.prompt}
-        />
-      </label>
+        <label className="input-group">
+          <span>Confidence score (0-100)</span>
+          <input
+            max="100"
+            min="0"
+            name="confidenceScore"
+            onChange={handleChange}
+            required
+            type="number"
+            value={formValues.confidenceScore}
+          />
+        </label>
 
-      <label className="input-group">
-        <span>Confidence score (0-100)</span>
-        <input
-          max="100"
-          min="0"
-          name="confidenceScore"
-          onChange={handleChange}
-          required
-          type="number"
-          value={formValues.confidenceScore}
-        />
-      </label>
+        <label className="input-group field-span-2">
+          <span>Prompt</span>
+          <textarea
+            name="prompt"
+            onChange={handleChange}
+            placeholder="Describe the prompt used to generate the image"
+            required
+            rows="3"
+            value={formValues.prompt}
+          />
+        </label>
+      </div>
 
-      <button className="primary-button" disabled={disabled} type="submit">
-        Upload, Hash, and Register
-      </button>
+      <div className="upload-actions">
+        <button className="primary-button" disabled={disabled} type="submit">
+          Upload, Hash, and Register
+        </button>
+      </div>
 
-      <div className="helper-card">
-        <p><strong>Status:</strong> {uploadState.message}</p>
-        <p><strong>SHA-256:</strong> {uploadState.hash || "Pending"}</p>
-        <p><strong>IPFS CID:</strong> {uploadState.cid || "Pending"}</p>
+      <div className="helper-card helper-card-compact">
+        <div className="panel-header-row">
+          <span className="section-code">PIPELINE</span>
+          <span className="section-mini-label">Local Digest + Remote Pin</span>
+        </div>
+        <div className="data-grid pipeline-grid">
+          <div className="data-item">
+            <span className="data-key">Status</span>
+            <span className="data-value">{uploadState.message}</span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">SHA-256</span>
+            <span className="data-value hash-value">{uploadState.hash || "Pending"}</span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">IPFS CID</span>
+            <span className="data-value hash-value">{uploadState.cid || "Pending"}</span>
+          </div>
+        </div>
       </div>
     </form>
   );

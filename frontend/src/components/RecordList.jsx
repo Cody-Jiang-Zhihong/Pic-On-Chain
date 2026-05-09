@@ -30,23 +30,56 @@ export default function RecordList({
   return (
     <div className="record-stack">
       <article className="record-card">
+        <div className="panel-header-row">
+          <span className="section-code">IMAGE</span>
+          <span className="section-mini-label">Primary Provenance Record</span>
+        </div>
         <h3>Image Record</h3>
-        <p><strong>Image hash:</strong> {record.imageHash}</p>
-        <p><strong>IPFS CID:</strong> {record.ipfsCid}</p>
-        <p>
-          <strong>IPFS link:</strong>{" "}
-          <a href={getIpfsUrl(record.ipfsCid)} rel="noreferrer" target="_blank">
-            Open asset
-          </a>
-        </p>
-        <p><strong>Model:</strong> {record.modelName}</p>
-        <p><strong>Prompt:</strong> {record.prompt}</p>
-        <p><strong>Latest confidence score:</strong> {record.confidenceScore}</p>
-        <p><strong>Creator:</strong> {record.creator}</p>
-        <p><strong>Registered at:</strong> {record.timestamp}</p>
+        <div className="data-grid">
+          <div className="data-item">
+            <span className="data-key">Image hash</span>
+            <span className="data-value hash-value">{record.imageHash}</span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">IPFS CID</span>
+            <span className="data-value hash-value">{record.ipfsCid}</span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">IPFS link</span>
+            <span className="data-value">
+              <a href={getIpfsUrl(record.ipfsCid)} rel="noreferrer" target="_blank">
+                Open asset
+              </a>
+            </span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">Model</span>
+            <span className="data-value">{record.modelName}</span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">Prompt</span>
+            <span className="data-value">{record.prompt}</span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">Latest confidence score</span>
+            <span className="data-value accent-value">{record.confidenceScore}</span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">Creator</span>
+            <span className="data-value hash-value">{record.creator}</span>
+          </div>
+          <div className="data-item">
+            <span className="data-key">Registered at</span>
+            <span className="data-value">{record.timestamp}</span>
+          </div>
+        </div>
       </article>
 
       <article className="record-card">
+        <div className="panel-header-row">
+          <span className="section-code">VERIFY</span>
+          <span className="section-mini-label">Appended Trust Timeline</span>
+        </div>
         <h3>Verification History</h3>
         {verifications.length === 0 ? (
           <p>No verification entries yet.</p>
@@ -54,11 +87,25 @@ export default function RecordList({
           <div className="history-list">
             {verifications.map((item, index) => (
               <div className="history-item" key={item.id}>
-                <p><strong>Entry:</strong> #{index + 1}</p>
-                <p><strong>Verifier:</strong> {item.verifier}</p>
-                <p><strong>Score:</strong> {item.newScore}</p>
-                <p><strong>Remark:</strong> {item.remark || "No remark provided"}</p>
-                <p><strong>Timestamp:</strong> {item.timestamp}</p>
+                <div className="history-index">Entry #{index + 1}</div>
+                <div className="data-grid">
+                  <div className="data-item">
+                    <span className="data-key">Verifier</span>
+                    <span className="data-value hash-value">{item.verifier}</span>
+                  </div>
+                  <div className="data-item">
+                    <span className="data-key">Score</span>
+                    <span className="data-value accent-value">{item.newScore}</span>
+                  </div>
+                  <div className="data-item">
+                    <span className="data-key">Remark</span>
+                    <span className="data-value">{item.remark || "No remark provided"}</span>
+                  </div>
+                  <div className="data-item">
+                    <span className="data-key">Timestamp</span>
+                    <span className="data-value">{item.timestamp}</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -66,6 +113,10 @@ export default function RecordList({
       </article>
 
       <article className="record-card">
+        <div className="panel-header-row">
+          <span className="section-code">PATCH</span>
+          <span className="section-mini-label">Write Verification Delta</span>
+        </div>
         <h3>Add Verification</h3>
         <form className="stacked-form" onSubmit={handleSubmit}>
           <label className="input-group">

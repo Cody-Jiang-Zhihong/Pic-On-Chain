@@ -77,10 +77,22 @@ The `ImageProvenance` contract exposes the following functions:
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 22 LTS recommended
 - MetaMask browser extension
 - A local Hardhat node for local deployment
 - A Pinata JWT for IPFS uploads
+
+## Version Notes
+
+- Recommended Node.js version: `22` LTS
+- Current project toolchain:
+  - Hardhat `2.28.x`
+  - Solidity `0.8.24`
+  - React `18`
+  - Vite `5`
+- The project can compile and test on Windows, but `Node 24` may trigger an exit-time assertion after Hardhat prompts on some setups.
+- On Windows PowerShell, use `npm.cmd` and `npx.cmd` instead of `npm` and `npx` if script execution is restricted.
+- This repository includes a root `.nvmrc` so you can switch to the recommended Node version quickly.
 
 ## Installation
 
@@ -139,6 +151,79 @@ VITE_IPFS_GATEWAY=https://gateway.pinata.cloud/ipfs
 ```bash
 cd frontend
 npm run dev
+```
+
+## Windows PowerShell Command List
+
+If your PowerShell blocks `npm.ps1` or `npx.ps1`, use the `.cmd` executables instead.
+
+1. Optional: switch to the recommended Node version with nvm:
+
+```powershell
+nvm use 22
+node -v
+```
+
+2. Install root dependencies:
+
+```powershell
+npm.cmd install
+```
+
+3. Compile contracts:
+
+```powershell
+$env:HARDHAT_DISABLE_TELEMETRY_PROMPT='true'
+npx.cmd hardhat compile
+```
+
+4. Run tests:
+
+```powershell
+$env:HARDHAT_DISABLE_TELEMETRY_PROMPT='true'
+npx.cmd hardhat test
+```
+
+5. Start the local Hardhat node in terminal A:
+
+```powershell
+$env:HARDHAT_DISABLE_TELEMETRY_PROMPT='true'
+npx.cmd hardhat node
+```
+
+6. Deploy the contract in terminal B:
+
+```powershell
+$env:HARDHAT_DISABLE_TELEMETRY_PROMPT='true'
+npx.cmd hardhat run scripts/deploy.js --network localhost
+```
+
+7. Install frontend dependencies:
+
+```powershell
+cd frontend
+npm.cmd install
+```
+
+8. Create `frontend/.env.local`:
+
+```env
+VITE_CONTRACT_ADDRESS=0xYourDeployedContractAddress
+VITE_PINATA_JWT=your_pinata_jwt
+VITE_IPFS_GATEWAY=https://gateway.pinata.cloud/ipfs
+```
+
+9. Start the frontend dev server:
+
+```powershell
+npm.cmd run dev
+```
+
+10. Optional: add temporary PowerShell helpers for the current session:
+
+```powershell
+function npm { & npm.cmd @Args }
+function npx { & npx.cmd @Args }
 ```
 
 ## Frontend Workflow
