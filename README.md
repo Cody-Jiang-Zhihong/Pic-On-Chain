@@ -1,15 +1,52 @@
-# AI Image Provenance System
+# Blockchain-Based Provenance and Trust Tracking for AI-Generated Images
 
-This project provides a blockchain-backed provenance and credibility tracing workflow for AI-generated images.
+This repository contains a blockchain final project focused on provenance and trust tracking for AI-generated images. The project was motivated by the recent improvement in image generation quality: highly realistic AI-generated visuals are becoming increasingly difficult to distinguish from real photographs, and hidden watermarks or platform-side safeguards are often not enough once images are reposted, edited, or stripped of context.
 
-It supports:
+Instead of making a binary real-or-fake judgment, this system creates a transparent and tamper-evident provenance record. It combines SHA-256 hashing, IPFS storage, and an Ethereum-compatible smart contract to register image metadata and preserve a later verification history.
 
-- Uploading an AI-generated image
-- Computing the image SHA-256 hash
-- Uploading the image to IPFS
-- Writing image metadata to the blockchain
-- Querying provenance and verification history
-- Appending follow-up verification records
+## Dashboard Preview
+
+![AI Image Provenance Dashboard](docs/dashboard.png)
+
+## Project Motivation
+
+Recent AI image systems can generate photo-like content convincing enough to create trust and safety risks in journalism, education, social media, digital art, and online communication. Even if a model provider uses hidden watermarks or metadata-based protections, those signals can be lost during screenshots, compression, reposting, or third-party redistribution.
+
+This project explores blockchain as one possible direction for stronger provenance infrastructure. The goal is not to automatically prove absolute authenticity, but to preserve a durable history of:
+
+- what file was registered
+- what SHA-256 digest identifies it
+- where the file is stored on IPFS
+- what prompt and model metadata were provided
+- who registered it on-chain
+- what later verification records were appended
+
+## Core Features
+
+The system supports:
+
+- uploading an AI-generated image
+- computing the image SHA-256 hash
+- uploading the image to IPFS
+- writing image metadata to the blockchain
+- querying provenance and verification history
+- appending follow-up verification records
+
+## System Workflow
+
+1. A user connects MetaMask in the frontend.
+2. The user selects an image and enters the model name, prompt, and confidence score.
+3. The browser computes a local SHA-256 hash of the file.
+4. The image is uploaded to IPFS through Pinata.
+5. The smart contract stores the hash, CID, metadata, creator address, and timestamp.
+6. Other users can later query the image by hash and append verification records with updated scores and remarks.
+
+## Why Blockchain and IPFS
+
+- Blockchain is used for immutable, transparent, and time-stamped provenance metadata.
+- SHA-256 is used to create a stable cryptographic fingerprint for each uploaded image.
+- IPFS is used to store the image content off-chain while preserving a verifiable content identifier.
+- Together, Ethereum and IPFS create a practical hybrid architecture: lightweight on-chain provenance plus decentralized media storage.
 
 ## Tech Stack
 
@@ -21,6 +58,11 @@ It supports:
 - MetaMask
 - Mocha + Chai
 
+## Repository and Report
+
+- Code repository: `https://github.com/Cody-Jiang-Zhihong/Pic-On-Chain`
+- Final project title: `Blockchain-Based Provenance and Trust Tracking for AI-Generated Images`
+
 ## Project Structure
 
 ```text
@@ -30,6 +72,9 @@ It supports:
 ├── test/ImageProvenance.test.js
 ├── hardhat.config.js
 ├── package.json
+├── FINAL_PROJECT_PAPER.md
+├── FINAL_PROJECT_PAPER.rtf
+├── docs/dashboard.png
 └── frontend
     ├── package.json
     ├── vite.config.js
